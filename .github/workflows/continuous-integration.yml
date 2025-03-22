@@ -19,10 +19,15 @@ jobs:
           distribution: zulu
           java-version: 21
 
+      - name: Extract version from pom.xml
+        id: get-version
+        run: |
+          echo "ARTIFACT=$(mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout)" >> $GITHUB_ENV          
+
       - name: Build & Unit & IT & FT & Sonar Analysis
         run: >
           mvn -B clean verify sonar:sonar 
-          -Dsonar.projectKey=miw-upm-github_tpv-article
+          -Dsonar.projectKey=miw-upm-github_${{ env.ARTIFACT }}
           -Dsonar.organization=miw-upm-github 
           -Dsonar.host.url=https://sonarcloud.io 
           -Dsonar.token=${{ secrets.SONAR_TOKEN }}
