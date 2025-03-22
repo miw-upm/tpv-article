@@ -1,11 +1,14 @@
 services:
-  devops:
+  tpv-article:
     build: .
-    image: devops:2.0.0
-    container_name: devops
+    image: tpv-article:1.0.0
+    container_name: tpv-article
     restart: always
     ports:
-      - "8080:8080"
+      - "8082:8082"
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongo:mongo@mongo:27017/tpvarticle?authSource=admin
+      EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://tpv-eureka:8761/eureka/
     networks:
       - miw
 

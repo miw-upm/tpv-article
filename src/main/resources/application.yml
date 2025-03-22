@@ -1,6 +1,6 @@
 spring:
   application:
-    name: devops
+    name: tpv-article
   profiles:
   # Profile ----------------------------------------
     active: dev
