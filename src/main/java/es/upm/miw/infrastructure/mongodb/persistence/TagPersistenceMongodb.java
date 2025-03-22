@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
-@Repository(value = "tagPersistence")
+@Repository
 public class TagPersistenceMongodb implements TagPersistence {
 
     private final TagRepository tagRepository;
