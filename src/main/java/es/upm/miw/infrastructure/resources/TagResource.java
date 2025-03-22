@@ -30,7 +30,7 @@ public class TagResource {
 
     @PreAuthorize(Security.ALL)
     @GetMapping(NAME)
-    public Tag readByName(@RequestParam String  name) {
+    public Tag readByName(@RequestParam String name) {
         return Tag.ofTagBarcode(this.tagService.readByName(name));
     }
 }

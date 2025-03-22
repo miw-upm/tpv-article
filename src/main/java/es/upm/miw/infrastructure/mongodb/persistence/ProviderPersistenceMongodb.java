@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.stream.Stream;
 
-@Repository(value="providerPersistence")
+@Repository(value = "providerPersistence")
 public class ProviderPersistenceMongodb implements ProviderPersistence {
 
     private final ProviderRepository providerRepository;

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-@Repository(value="articlePersistence")
+@Repository(value = "articlePersistence")
 public class ArticlePersistenceMongodb implements ArticlePersistence {
 
     private final ProviderRepository providerRepository;

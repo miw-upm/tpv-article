@@ -14,9 +14,7 @@ spring:
     default-property-inclusion: NON_NULL
   security:
     oauth2:
-      api-client:
-        api-client-id: api-client-id
-        api-client-secret: api-client-secret
+      jwk-uri: http://localhost:8081/oauth2/jwks
 
 info:
   app:

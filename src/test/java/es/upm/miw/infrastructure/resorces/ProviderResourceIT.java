@@ -33,7 +33,7 @@ class ProviderResourceIT {
     }
 
     @Test
-    @WithMockUser(username = "admin", authorities = {"SCOPE_customer"})
+    @WithMockUser(username = "666666003", authorities = {"SCOPE_customer"})
     void testReadNotAuthorized() throws Exception {
         mockMvc.perform(get(ProviderResource.PROVIDERS + ProviderResource.COMPANY_ID, "pro1"))
                 .andExpect(status().isUnauthorized());
