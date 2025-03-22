@@ -1,0 +1,16 @@
+services:
+  devops:
+    build: .
+    image: devops:2.0.0
+    container_name: devops
+    restart: always
+    ports:
+      - "8080:8080"
+    networks:
+      - miw
+
+networks:
+  miw:
+    external: true
+
+#> docker compose up --build -d
