@@ -12,12 +12,22 @@ spring:
     type: none
   jackson:
     default-property-inclusion: NON_NULL
+  security:
+    oauth2:
+      api-client:
+        api-client-id: api-client-id
+        api-client-secret: api-client-secret
 
 info:
   app:
     artifact: "@project.artifactId@"
     version: "@project.version@"
     build: "@maven.build.timestamp@"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
   info:
     env:
       enabled: true
@@ -27,3 +37,12 @@ logging:
     root: WARN
     es.upm.miw: DEBUG
 
+eureka:
+  instance:
+    lease-renewal-interval-in-seconds: 20
+    lease-expiration-duration-in-seconds: 60
+    instance-id: ${spring.application.name}:${server.port}
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
