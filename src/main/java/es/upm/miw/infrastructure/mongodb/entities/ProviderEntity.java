@@ -1,9 +1,11 @@
-package es.upm.miw;
+package es.upm.miw.infrastructure.mongodb.entities;
 
+import es.upm.miw.domain.model.Provider;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -28,4 +30,14 @@ public class ProviderEntity {
     private String note;
     private Boolean active;
 
+    public ProviderEntity(Provider provider) {
+        BeanUtils.copyProperties(provider, this);
+        this.id = UUID.randomUUID();
+    }
+
+    public Provider toProvider() {
+        Provider provider = new Provider();
+        BeanUtils.copyProperties(this, provider);
+        return provider;
+    }
 }

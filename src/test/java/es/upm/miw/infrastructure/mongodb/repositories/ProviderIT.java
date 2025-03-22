@@ -1,4 +1,4 @@
-package es.upm.miw;
+package es.upm.miw.infrastructure.mongodb.repositories;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,5 +1,6 @@
-package es.upm.miw;
+package es.upm.miw.infrastructure.mongodb.repositories;
 
+import es.upm.miw.infrastructure.mongodb.entities.ProviderEntity;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
