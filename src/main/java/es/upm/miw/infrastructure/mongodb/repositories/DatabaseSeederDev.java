@@ -73,19 +73,24 @@ public class DatabaseSeederDev {
                 ArticleEntity.builder().id(UUID.randomUUID()).barcode("8400000000048").description("descrip-a4")
                         .retailPrice(new BigDecimal("0.23")).tax(Tax.REDUCED).stock(1).providerEntity(providers[0])
                         .registrationDate(LocalDateTime.now()).discontinued(false).build(),
-                ArticleEntity.builder().id(UUID.randomUUID()).barcode("8400000000055").description("descrip-a5")
+                ArticleEntity.builder().id(UUID.fromString("0d6532e3-9f43-4b0c-9409-02a341017bc0"))
+                        .barcode("8400000000055").description("descrip-a5")
                         .retailPrice(new BigDecimal("0.23")).tax(Tax.SUPER_REDUCED).stock(0).providerEntity(providers[0])
                         .registrationDate(LocalDateTime.now()).discontinued(false).build(),
-                ArticleEntity.builder().id(UUID.randomUUID()).barcode("8400000000062").description("descrip-a6")
+                ArticleEntity.builder().id(UUID.fromString("7c6af944-5e66-4495-8404-5add4d805ac4"))
+                        .barcode("8400000000062").description("descrip-a6")
                         .retailPrice(new BigDecimal("0.01")).tax(Tax.REDUCED).stock(0).providerEntity(providers[1])
                         .registrationDate(LocalDateTime.now()).discontinued(true).build(),
-                ArticleEntity.builder().id(UUID.randomUUID()).barcode("8400000000079").description("Zarzuela - Polo T2")
+                ArticleEntity.builder().id(UUID.fromString("42d78648-9c5c-415c-949d-82efdfe53989"))
+                        .barcode("8400000000079").description("Zarzuela - Polo T2")
                         .retailPrice(new BigDecimal("16")).tax(Tax.GENERAL).stock(10).providerEntity(providers[0])
                         .registrationDate(LocalDateTime.now()).discontinued(false).build(),
-                ArticleEntity.builder().id(UUID.randomUUID()).barcode("8400000000086").description("Zarzuela - Polo T4")
+                ArticleEntity.builder().id(UUID.fromString("f1fc41a1-b942-4a92-970a-86cd4efbd93c"))
+                        .barcode("8400000000086").description("Zarzuela - Polo T4")
                         .retailPrice(new BigDecimal("17.8")).tax(Tax.SUPER_REDUCED).stock(5).providerEntity(providers[0])
                         .registrationDate(LocalDateTime.now()).discontinued(false).build(),
-                ArticleEntity.builder().id(UUID.randomUUID()).barcode("8400000000100").description("without provider")
+                ArticleEntity.builder().id(UUID.fromString("99c6ad6e-3348-40b6-9b3d-879190a1ca0d"))
+                        .barcode("8400000000100").description("without provider")
                         .retailPrice(new BigDecimal("0.12")).tax(Tax.FREE).stock(5).registrationDate(LocalDateTime.now())
                         .discontinued(false).build(),
         };
