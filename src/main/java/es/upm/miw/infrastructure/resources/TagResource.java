@@ -29,7 +29,7 @@ public class TagResource {
     }
 
     @PreAuthorize(Security.ALL)
-    public Stream<Tag> findNullSafe(@RequestParam (required = false)  String name) {
+    public Stream<Tag> findNullSafe(@RequestParam(required = false) String name) {
         return Stream.of(Tag.ofTagBarcode(this.tagService.readByName(name)));
     }
 }

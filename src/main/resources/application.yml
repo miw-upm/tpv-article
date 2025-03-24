@@ -2,7 +2,7 @@ spring:
   application:
     name: tpv-article
   profiles:
-  # Profile ----------------------------------------
+    # Profile ----------------------------------------
     active: dev
   # ------------------------------------------------
   output:

@@ -11,5 +11,5 @@ public class ProviderFindCriteria {
     private String company;
     private String phone;
     private String note;
-    private Boolean active=true;
+    private Boolean active = true;
 }

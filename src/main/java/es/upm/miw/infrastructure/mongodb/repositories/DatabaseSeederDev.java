@@ -48,48 +48,56 @@ public class DatabaseSeederDev {
     private void seedDataBaseJava() {
         log.warn("------- Initial Load from JAVA ---------------------------------------------------------------");
         ProviderEntity[] providers = {
-                ProviderEntity.builder().id(UUID.randomUUID()).company("pro1").nif("12345678b").phone("9166666601")
+                ProviderEntity.builder().id(UUID.fromString("aaaaaaa0-bbbb-cccc-dddd-eeeeffff0000"))
+                        .company("pro1").nif("12345678b").phone("9166666601")
                         .address("C/TPV-pro, 1").email("p1@gmail.com").note("p1").active(true).build(),
-                ProviderEntity.builder().id(UUID.randomUUID()).company("pro2").nif("12345678z").phone("9166666602")
+                ProviderEntity.builder().id(UUID.fromString("aaaaaaa0-bbbb-cccc-dddd-eeeeffff0001"))
+                        .company("pro2").nif("12345678z").phone("9166666602")
                         .address("C/TPV-pro, 2").email("p2@gmail.com").active(false).build(),
-                ProviderEntity.builder().id(UUID.randomUUID()).company("pro3").nif("12345678e").phone("9166666603")
+                ProviderEntity.builder().id(UUID.fromString("aaaaaaa0-bbbb-cccc-dddd-eeeeffff0002"))
+                        .company("pro3").nif("12345678e").phone("9166666603")
                         .address("C/TPV-pro, 3").email("p2@gmail.com").note("p3").active(true).build(),
-                ProviderEntity.builder().id(UUID.randomUUID()).company("pro4").nif("12345678h").phone("9166666604")
+                ProviderEntity.builder().id(UUID.fromString("aaaaaaa0-bbbb-cccc-dddd-eeeeffff0003"))
+                        .company("pro4").nif("12345678h").phone("9166666604")
                         .address("C/TPV-pro, 4").email("p3@gmail.com").note("p4").active(true).build(),
         };
         this.providerRepository.saveAll(List.of(providers));
         log.warn("        ------- providers --------------------------------------------------------------------");
 
         ArticleEntity[] articles = {
-                ArticleEntity.builder().id(UUID.randomUUID()).barcode("8400000000017").description("Zarzuela - Falda T2")
+                ArticleEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
+                        .barcode("8400000000017").description("Zarzuela - Falda T2")
                         .retailPrice(new BigDecimal("20")).tax(Tax.GENERAL).stock(10).providerEntity(providers[0])
                         .registrationDate(LocalDateTime.now()).discontinued(false).build(),
-                ArticleEntity.builder().id(UUID.randomUUID()).barcode("8400000000024").description("Zarzuela - Falda T4")
+                ArticleEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
+                        .barcode("8400000000024").description("Zarzuela - Falda T4")
                         .retailPrice(new BigDecimal("27.8")).tax(Tax.GENERAL).stock(5).providerEntity(providers[0])
                         .registrationDate(LocalDateTime.now()).discontinued(false).build(),
-                ArticleEntity.builder().id(UUID.randomUUID()).barcode("8400000000031").description("descrip-a3")
+                ArticleEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002"))
+                        .barcode("8400000000031").description("descrip-a3")
                         .retailPrice(new BigDecimal("10.12")).tax(Tax.FREE).stock(8).providerEntity(providers[0])
                         .registrationDate(LocalDateTime.now()).discontinued(false).build(),
-                ArticleEntity.builder().id(UUID.randomUUID()).barcode("8400000000048").description("descrip-a4")
+                ArticleEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"))
+                        .barcode("8400000000048").description("descrip-a4")
                         .retailPrice(new BigDecimal("0.23")).tax(Tax.REDUCED).stock(1).providerEntity(providers[0])
                         .registrationDate(LocalDateTime.now()).discontinued(false).build(),
-                ArticleEntity.builder().id(UUID.fromString("0d6532e3-9f43-4b0c-9409-02a341017bc0"))
+                ArticleEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0004"))
                         .barcode("8400000000055").description("descrip-a5")
                         .retailPrice(new BigDecimal("0.23")).tax(Tax.SUPER_REDUCED).stock(0).providerEntity(providers[0])
                         .registrationDate(LocalDateTime.now()).discontinued(false).build(),
-                ArticleEntity.builder().id(UUID.fromString("7c6af944-5e66-4495-8404-5add4d805ac4"))
+                ArticleEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0005"))
                         .barcode("8400000000062").description("descrip-a6")
                         .retailPrice(new BigDecimal("0.01")).tax(Tax.REDUCED).stock(0).providerEntity(providers[1])
                         .registrationDate(LocalDateTime.now()).discontinued(true).build(),
-                ArticleEntity.builder().id(UUID.fromString("42d78648-9c5c-415c-949d-82efdfe53989"))
+                ArticleEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0006"))
                         .barcode("8400000000079").description("Zarzuela - Polo T2")
                         .retailPrice(new BigDecimal("16")).tax(Tax.GENERAL).stock(10).providerEntity(providers[0])
                         .registrationDate(LocalDateTime.now()).discontinued(false).build(),
-                ArticleEntity.builder().id(UUID.fromString("f1fc41a1-b942-4a92-970a-86cd4efbd93c"))
+                ArticleEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0007"))
                         .barcode("8400000000086").description("Zarzuela - Polo T4")
                         .retailPrice(new BigDecimal("17.8")).tax(Tax.SUPER_REDUCED).stock(5).providerEntity(providers[0])
                         .registrationDate(LocalDateTime.now()).discontinued(false).build(),
-                ArticleEntity.builder().id(UUID.fromString("99c6ad6e-3348-40b6-9b3d-879190a1ca0d"))
+                ArticleEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0008"))
                         .barcode("8400000000100").description("without provider")
                         .retailPrice(new BigDecimal("0.12")).tax(Tax.FREE).stock(5).registrationDate(LocalDateTime.now())
                         .discontinued(false).build(),
@@ -97,16 +105,18 @@ public class DatabaseSeederDev {
         this.articleRepository.saveAll(List.of(articles));
         log.warn("        ------- articles ---------------------------------------------------------------------");
         TagEntity[] tags = {
-                TagEntity.builder().id(UUID.randomUUID()).name("tag1").group("group1").description("Tag 1")
+                TagEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
+                        .name("tag1").group("group1").description("Tag 1")
                         .articleEntity(articles[0]).articleEntity(articles[1]).articleEntity(articles[2]).build(),
-                TagEntity.builder().id(UUID.randomUUID()).name("tag2").group("group2").description("Tag 2")
+                TagEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
+                        .name("tag2").group("group2").description("Tag 2")
                         .articleEntity(articles[2]).articleEntity(articles[3]).articleEntity(articles[4]).build(),
-                TagEntity.builder().id(UUID.randomUUID()).name("tag3").group("group2").description("Tag 3")
+                TagEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002"))
+                        .name("tag3").group("group2").description("Tag 3")
                         .articleEntity(articles[5]).articleEntity(articles[6]).build(),
         };
         this.tagRepository.saveAll(List.of(tags));
         log.warn("        ------- tags -------------------------------------------------------------------------");
-
     }
 
 }
