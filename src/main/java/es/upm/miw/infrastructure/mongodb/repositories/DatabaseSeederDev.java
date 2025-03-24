@@ -48,16 +48,16 @@ public class DatabaseSeederDev {
     private void seedDataBaseJava() {
         log.warn("------- Initial Load from JAVA ---------------------------------------------------------------");
         ProviderEntity[] providers = {
-                ProviderEntity.builder().id(UUID.fromString("aaaaaaa0-bbbb-cccc-dddd-eeeeffff0000"))
+                ProviderEntity.builder().id(UUID.fromString("aaaaaaa0-bbbb-cccc-dddd-eeeeffff0001"))
                         .company("pro1").nif("12345678b").phone("9166666601")
                         .address("C/TPV-pro, 1").email("p1@gmail.com").note("p1").active(true).build(),
-                ProviderEntity.builder().id(UUID.fromString("aaaaaaa0-bbbb-cccc-dddd-eeeeffff0001"))
-                        .company("pro2").nif("12345678z").phone("9166666602")
-                        .address("C/TPV-pro, 2").email("p2@gmail.com").active(false).build(),
                 ProviderEntity.builder().id(UUID.fromString("aaaaaaa0-bbbb-cccc-dddd-eeeeffff0002"))
+                        .company("pro2").nif("12345678z").phone("9166666602")
+                        .address("C/TPV-pro, 2").email("p2@gmail.com").note("p2").active(false).build(),
+                ProviderEntity.builder().id(UUID.fromString("aaaaaaa0-bbbb-cccc-dddd-eeeeffff0003"))
                         .company("pro3").nif("12345678e").phone("9166666603")
                         .address("C/TPV-pro, 3").email("p2@gmail.com").note("p3").active(true).build(),
-                ProviderEntity.builder().id(UUID.fromString("aaaaaaa0-bbbb-cccc-dddd-eeeeffff0003"))
+                ProviderEntity.builder().id(UUID.fromString("aaaaaaa0-bbbb-cccc-dddd-eeeeffff0004"))
                         .company("pro4").nif("12345678h").phone("9166666604")
                         .address("C/TPV-pro, 4").email("p3@gmail.com").note("p4").active(true).build(),
         };

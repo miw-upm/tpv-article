@@ -24,8 +24,9 @@ public class DatabaseStarting {
 
     void initialize() {
         if (!this.providerRepository.existsByCompany(VARIOUS_CODE)) {
-            this.providerRepository.save(ProviderEntity.builder().id(UUID.randomUUID()).company(VARIOUS_NAME)
-                    .nif(VARIOUS_NAME).phone(VARIOUS_PHONE).active(true).build());
+            this.providerRepository.save(ProviderEntity.builder().
+                    id(UUID.fromString("aaaaaaa0-bbbb-cccc-dddd-eeeeffff0000")).company(VARIOUS_NAME)
+                    .nif(VARIOUS_NAME).phone(VARIOUS_PHONE).note(VARIOUS_NAME).active(true).build());
             log.warn("------- Create Provider Various -----------");
         }
     }

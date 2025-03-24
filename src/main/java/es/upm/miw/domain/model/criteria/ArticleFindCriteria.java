@@ -11,5 +11,5 @@ public class ArticleFindCriteria {
     private String barcode;
     private String description;
     private Integer stock;
-    private Boolean discontinued = true;
+    private Boolean discontinued = false;
 }
