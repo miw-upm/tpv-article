@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
+import java.util.stream.Stream;
 
 @RestController
 @PreAuthorize(Security.ADMIN_MANAGER_OPERATOR)
@@ -14,7 +15,6 @@ import java.util.UUID;
 public class TagResource {
     public static final String TAGS = "/tags";
     public static final String ID_ID = "/{id}";
-    public static final String NAME = "/name";
 
     private final TagService tagService;
 
@@ -29,8 +29,7 @@ public class TagResource {
     }
 
     @PreAuthorize(Security.ALL)
-    @GetMapping(NAME)
-    public Tag readByName(@RequestParam String name) {
-        return Tag.ofTagBarcode(this.tagService.readByName(name));
+    public Stream<Tag> findNullSafe(@RequestParam (required = false)  String name) {
+        return Stream.of(Tag.ofTagBarcode(this.tagService.readByName(name)));
     }
 }

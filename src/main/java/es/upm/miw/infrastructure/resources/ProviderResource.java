@@ -1,6 +1,7 @@
 package es.upm.miw.infrastructure.resources;
 
 import es.upm.miw.domain.model.Provider;
+import es.upm.miw.domain.model.criteria.ProviderFindCriteria;
 import es.upm.miw.domain.services.ProviderService;
 import es.upm.miw.infrastructure.resources.dtos.ProviderCompanyDto;
 import jakarta.validation.Valid;
@@ -17,8 +18,8 @@ public class ProviderResource {
     public static final String PROVIDERS = "/providers";
 
     public static final String COMPANY_ID = "/{company}";
-    public static final String COMPANY = "/company";
-    public static final String SEARCH = "/search";
+
+    public static final String COMPANIES = "/companies";
 
     private final ProviderService providerService;
 
@@ -45,18 +46,16 @@ public class ProviderResource {
         return this.providerService.update(company, provider);
     }
 
-    @GetMapping(COMPANY)
-    public ProviderCompanyDto findByCompanyAndActiveIsTrueNullSave(@RequestParam(required = false) String company) {
-        return new ProviderCompanyDto(this.providerService.findByCompanyAndActiveIsTrueNullSave(company)
+    @GetMapping(COMPANIES)
+    public ProviderCompanyDto findCompanies(@RequestParam String company) {
+        return new ProviderCompanyDto(this.providerService.findCompanies(company)
                 .map(Provider::getCompany)
                 .toList());
     }
 
-    @GetMapping(SEARCH)
-    public Stream<Provider> findByCompanyAndPhoneAndNoteNullSafe(
-            @RequestParam(required = false) String company, @RequestParam(required = false) String phone,
-            @RequestParam(required = false) String note) {
-        return this.providerService.findByCompanyAndPhoneAndNoteNullSafe(company, phone, note)
+    @GetMapping
+    public Stream<Provider> findByNullSafe(@ModelAttribute ProviderFindCriteria criteria) {
+        return this.providerService.findNullSafe(criteria)
                 .map(Provider::ofCompanyPhoneNote);
     }
 

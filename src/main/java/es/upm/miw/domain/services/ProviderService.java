@@ -2,6 +2,7 @@ package es.upm.miw.domain.services;
 
 import es.upm.miw.domain.exceptions.ConflictException;
 import es.upm.miw.domain.model.Provider;
+import es.upm.miw.domain.model.criteria.ProviderFindCriteria;
 import es.upm.miw.domain.persistence.ProviderPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,11 +52,12 @@ public class ProviderService {
         return this.providerPersistence.update(company, provider);
     }
 
-    public Stream<Provider> findByCompanyAndActiveIsTrueNullSave(String company) {
+    public Stream<Provider> findCompanies(String company) {
         return this.providerPersistence.findByCompanyAndActiveIsTrueNullSave(company);
     }
 
-    public Stream<Provider> findByCompanyAndPhoneAndNoteNullSafe(String company, String phone, String note) {
-        return this.providerPersistence.findByCompanyAndPhoneAndNoteNullSafe(company, phone, note);
+    public Stream<Provider> findNullSafe(ProviderFindCriteria criteria) {
+        return this.providerPersistence.findByCompanyAndPhoneAndNoteNullSafe(
+                criteria.getCompany(), criteria.getPhone(), criteria.getNote());
     }
 }

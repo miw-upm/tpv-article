@@ -2,6 +2,7 @@ package es.upm.miw.infrastructure.mongodb.persistence;
 
 import es.upm.miw.domain.exceptions.NotFoundException;
 import es.upm.miw.domain.model.Article;
+import es.upm.miw.domain.model.criteria.ArticleFindCriteria;
 import es.upm.miw.domain.persistence.ArticlePersistence;
 import es.upm.miw.infrastructure.mongodb.entities.ArticleEntity;
 import es.upm.miw.infrastructure.mongodb.entities.ProviderEntity;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 @Repository
@@ -46,6 +48,13 @@ public class ArticlePersistenceMongodb implements ArticlePersistence {
     }
 
     @Override
+    public Article readById(UUID id) {
+        return this.articleRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Non existent id: " + id))
+                .toArticle();
+    }
+
+    @Override
     public Article update(String barcode, Article article) {
         ArticleEntity retrieveArticle = this.articleRepository.findByBarcode(barcode).orElseThrow();
         BeanUtils.copyProperties(article, retrieveArticle);
@@ -53,22 +62,8 @@ public class ArticlePersistenceMongodb implements ArticlePersistence {
     }
 
     @Override
-    public Stream<Article> findByBarcodeAndDescriptionAndReferenceAndStockLessThanAndDiscontinuedNullSafe(
-            String barcode, String description, String reference, Integer stock, Boolean discontinued) {
-        return this.articleRepository.findByBarcodeAndDescriptionAndReferenceAndStockLessThanAndDiscontinuedNullSafe(
-                        barcode, description, reference, stock, discontinued).stream()
-                .map(ArticleEntity::toArticle);
-    }
-
-    @Override
     public Stream<Article> findByBarcodeAndNotDiscontinuedNullField(String barcode) {
         return this.articleRepository.findByBarcodeLikeAndNotDiscontinuedNullSafe(barcode).stream()
-                .map(ArticleEntity::toArticle);
-    }
-
-    @Override
-    public Stream<Article> findByDiscontinuedIsFalse() {
-        return this.articleRepository.findByDiscontinuedIsFalse().stream()
                 .map(ArticleEntity::toArticle);
     }
 
@@ -80,6 +75,13 @@ public class ArticlePersistenceMongodb implements ArticlePersistence {
     @Override
     public Stream<Article> findByProviderIsNull() {
         return this.articleRepository.findByProviderEntityIsNull().stream()
+                .map(ArticleEntity::toArticle);
+    }
+
+    @Override
+    public Stream<Article> findNullSafe(ArticleFindCriteria criteria) {
+        return this.articleRepository.findByBarcodeAndDescriptionAndStockLessThanAndDiscontinuedNullSafe(
+                        criteria.getBarcode(), criteria.getDescription(), criteria.getStock(), criteria.getDiscontinued()).stream()
                 .map(ArticleEntity::toArticle);
     }
 }

@@ -1,6 +1,7 @@
 package es.upm.miw.infrastructure.resources;
 
 import es.upm.miw.domain.model.Article;
+import es.upm.miw.domain.model.criteria.ArticleFindCriteria;
 import es.upm.miw.domain.services.ArticleService;
 import es.upm.miw.infrastructure.resources.dtos.ArticleBarcodesDto;
 import jakarta.validation.Valid;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
 import java.util.stream.Stream;
 
 @RestController
@@ -16,10 +18,8 @@ import java.util.stream.Stream;
 public class ArticleResource {
     public static final String ARTICLES = "/articles";
 
-    public static final String BARCODE_ID = "/{barcode}";
-    public static final String SEARCH = "/search";
-    public static final String UNFINISHED = "/unfinished";
-    public static final String BARCODE = "/barcode";
+    public static final String ID_ID = "/{id}";
+    public static final String BARCODES = "/barcodes";
 
     private final ArticleService articleService;
 
@@ -35,40 +35,25 @@ public class ArticleResource {
     }
 
     @PreAuthorize(Security.ALL)
-    @GetMapping(BARCODE_ID)
-    public Article read(@PathVariable String barcode) {
-        return this.articleService.read(barcode);
+    @GetMapping(ID_ID)
+    public Article read(@PathVariable UUID id) {
+        return this.articleService.read(id);
     }
 
-    @PutMapping(BARCODE_ID)
-    public Article update(@PathVariable String barcode, @Valid @RequestBody Article article) {
-        article.doDefault();
-        return this.articleService.update(barcode, article);
-    }
-
-    @GetMapping(SEARCH)
-    public Stream<Article> findByBarcodeAndDescriptionAndReferenceAndStockLessThanAndDiscontinuedNullSafe(
-            @RequestParam(required = false) String barcode, @RequestParam(required = false) String description, @
-                    RequestParam(required = false) String reference, @RequestParam(required = false) Integer stock,
-            @RequestParam(required = false) Boolean discontinued) {
-        return this.articleService.findByBarcodeAndDescriptionAndReferenceAndStockLessThanAndDiscontinuedNullSafe(
-                        barcode, description, reference, stock, discontinued)
+    @GetMapping
+    public Stream<Article> findNullSafe(@ModelAttribute ArticleFindCriteria criteria) {
+        return this.articleService.findNullSafe(criteria)
                 .map(Article::ofBarcodeDescriptionStock);
     }
 
     @PreAuthorize(Security.ALL)
-    @GetMapping(BARCODE)
+    @GetMapping(BARCODES)
     public ArticleBarcodesDto findByBarcodeNullSafe(@RequestParam(required = false) String barcode) {
         return new ArticleBarcodesDto(
-                this.articleService.findByBarcodeAndNotDiscontinuedNullSafe(barcode)
+                this.articleService.findByBarcodeNullSafe(barcode)
                         .map(Article::getBarcode)
                         .toList()
         );
-    }
-
-    @GetMapping(UNFINISHED)
-    public Stream<Article> findByUnfinished() {
-        return this.articleService.findByUnfinished();
     }
 
 }

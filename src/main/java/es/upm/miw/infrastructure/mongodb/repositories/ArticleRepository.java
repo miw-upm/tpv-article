@@ -20,17 +20,16 @@ public interface ArticleRepository extends MongoRepository<ArticleEntity, UUID> 
     List<ArticleEntity> findByProviderEntityIsNull();
 
     @Query("{$and:[" // allow NULL: all elements
-            + "?#{ [0] == null ? {_id : {$ne:null}} : { barcode : {$regex:[0], $options: 'i'} } },"
-            + "?#{ [1] == null ? {_id : {$ne:null}} : { description : {$regex:[1], $options: 'i'} } },"
-            + "?#{ [2] == null ? {_id : {$ne:null}} : { reference : {$regex:[2], $options: 'i'} } },"
-            + "?#{ [3] == null ? {_id : {$ne:null}} : { stock : {$lt:[3]} } },"
-            + "?#{ [4] == null ? {_id : {$ne:null}} : { discontinued : [4] } }"
+            + "?#{ [0] == null ? {} : { barcode : {$regex:[0], $options: 'i'} } },"
+            + "?#{ [1] == null ? {} : { description : {$regex:[1], $options: 'i'} } },"
+            + "?#{ [3] == null ? {} : { stock : {$lt:[3]} } },"
+            + "?#{ [4] == null ? {} : { discontinued : [4] } }"
             + "] }")
-    List<ArticleEntity> findByBarcodeAndDescriptionAndReferenceAndStockLessThanAndDiscontinuedNullSafe(
-            String barcode, String description, String reference, Integer stock, Boolean discontinued);
+    List<ArticleEntity> findByBarcodeAndDescriptionAndStockLessThanAndDiscontinuedNullSafe(
+            String barcode, String description, Integer stock, Boolean discontinued);
 
     @Query("{$and:[" // allow NULL in barcode
-            + "?#{ [0] == null ? {_id : {$ne:null}} : { barcode : {$regex:[0], $options: 'i'} } },"
+            + "?#{ [0] == null ? {} : { barcode : {$regex:[0], $options: 'i'} } },"
             + "{discontinued : false}"
             + "] }")
     List<ArticleEntity> findByBarcodeLikeAndNotDiscontinuedNullSafe(String barcode);

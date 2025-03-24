@@ -2,6 +2,7 @@ package es.upm.miw.domain.services;
 
 import es.upm.miw.domain.exceptions.ConflictException;
 import es.upm.miw.domain.model.Article;
+import es.upm.miw.domain.model.criteria.ArticleFindCriteria;
 import es.upm.miw.domain.persistence.ArticlePersistence;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,8 @@ public class ArticleService {
         }
     }
 
-    public Article read(String barcode) {
-        return this.articlePersistence.readByBarcode(barcode);
+    public Article read(UUID id) {
+        return this.articlePersistence.readById(id);
     }
 
     public Article update(String barcode, Article article) {
@@ -47,17 +48,11 @@ public class ArticleService {
         return this.articlePersistence.update(barcode, retrieveArticle);
     }
 
-    public Stream<Article> findByBarcodeAndDescriptionAndReferenceAndStockLessThanAndDiscontinuedNullSafe(
-            String barcode, String description, String reference, Integer stock, Boolean discontinued) {
-        return this.articlePersistence.findByBarcodeAndDescriptionAndReferenceAndStockLessThanAndDiscontinuedNullSafe(
-                barcode, description, reference, stock, discontinued);
+    public Stream<Article> findNullSafe(ArticleFindCriteria criteria) {
+        return this.articlePersistence.findNullSafe(criteria);
     }
 
-    public Stream<Article> findByUnfinished() {
-        return this.articlePersistence.findByProviderIsNull();
-    }
-
-    public Stream<Article> findByBarcodeAndNotDiscontinuedNullSafe(String barcode) {
+    public Stream<Article> findByBarcodeNullSafe(String barcode) {
         return this.articlePersistence.findByBarcodeAndNotDiscontinuedNullField(barcode);
     }
 }
