@@ -10,20 +10,18 @@
 1. Clonar el repositorio en tu equipo, **mediante consola**:
 ```sh
 > cd <folder path>
-> git clone https://github.com/miw-upm/api-template
+> git clone https://github.com/miw-upm/tpv-article
 ```
 2. Importar el proyecto mediante **IntelliJ IDEA**  
    * **Open**, y seleccionar la carpeta del proyecto.
 
-### :gear: Ejecución en local co IntelliJ
+### :gear: Ejecución en local con IntelliJ
 * Ejecutar la clase **Application**
-```sh
-> docker compose up --build -d
-```
+
 ### :gear: Ejecución en local con Docker
 * Ejecutar en el proyecto la siguiente secuencia de comandos de Docker ( :warning: **incluir el punto final** ):
 ```sh
 > docker compose up --build -d
 ```
 
-* Cliente Web: `http://localhost:????`
+* Cliente Web: `http://localhost:8082/swagger-ui.html`
