@@ -34,8 +34,8 @@ class ProviderResourceIT {
 
     @Test
     @WithMockUser(username = "666666003", authorities = {"SCOPE_customer"})
-    void testReadNotAuthorized() throws Exception {
-        mockMvc.perform(get(ProviderResource.PROVIDERS + ProviderResource.COMPANY_ID, "pro1"))
+    void testFindCompaniesNotAuthorized() throws Exception {
+        mockMvc.perform(get(ProviderResource.PROVIDERS + ProviderResource.COMPANIES))
                 .andExpect(status().isUnauthorized());
     }
 
