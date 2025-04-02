@@ -26,6 +26,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @EnableWebSecurity
 @EnableMethodSecurity
 public class ResourceServerConfig {  // validate tokens y security APIs con SCOPE_*.
+    private static final String SCOPE_PREFIX = "SCOPE_";
 
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -42,7 +43,7 @@ public class ResourceServerConfig {  // validate tokens y security APIs con SCOP
     @Bean
     public JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
-        grantedAuthoritiesConverter.setAuthorityPrefix(Scope.PREFIX);
+        grantedAuthoritiesConverter.setAuthorityPrefix(SCOPE_PREFIX);
         grantedAuthoritiesConverter.setAuthoritiesClaimName("scope");
 
         JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
@@ -53,7 +54,7 @@ public class ResourceServerConfig {  // validate tokens y security APIs con SCOP
                 return Optional.ofNullable(jwt.getClaimAsStringList("cognito:groups"))// AWS cognito: group as scope
                         .orElse(Collections.emptyList())
                         .stream()
-                        .map(group -> new SimpleGrantedAuthority(Scope.PREFIX + group))
+                        .map(group -> new SimpleGrantedAuthority(SCOPE_PREFIX + group))
                         .collect(Collectors.toList());
             }
 

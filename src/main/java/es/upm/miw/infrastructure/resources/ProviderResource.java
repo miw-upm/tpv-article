@@ -34,6 +34,7 @@ public class ProviderResource {
         return this.providerService.create(provider);
     }
 
+    @PreAuthorize(Security.ALL)
     @GetMapping(COMPANY_ID)
     public Provider read(@PathVariable String company) {
         return this.providerService.readByCompany(company);
@@ -47,7 +48,7 @@ public class ProviderResource {
     }
 
     @GetMapping(COMPANIES)
-    public ProviderCompanyDto findCompanies(@RequestParam String company) {
+    public ProviderCompanyDto findCompanies(@RequestParam(required = false) String company) {
         return new ProviderCompanyDto(this.providerService.findCompanies(company)
                 .map(Provider::getCompany)
                 .toList());

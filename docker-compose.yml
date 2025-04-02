@@ -9,7 +9,7 @@ services:
     environment:
       SPRING_DATA_MONGODB_URI: mongodb://mongo:mongo@mongo:27017/tpvarticle?authSource=admin
       EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://host.docker.internal:8761/eureka/
-      SPRING_SECURITY_OAUTH2_JWK-URI: http://host.docker.internal:8081/oauth2/jwks
+      SPRING_SECURITY_OAUTH2_JWK-URI: http://host.docker.internal:8080/tpv-user/oauth2/jwks
     networks:
       - miw
 

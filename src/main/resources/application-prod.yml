@@ -12,6 +12,9 @@ spring:
   data:
     mongodb:
       uri: mongodb://mongo:mongo@localhost:27017/tpvarticle?authSource=admin
+  security:
+    oauth2:
+      jwk-uri: http://localhost:8080/tpv-user/oauth2/jwks
 
 eureka:
   client:
