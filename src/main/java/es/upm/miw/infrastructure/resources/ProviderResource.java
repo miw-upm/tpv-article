@@ -55,7 +55,7 @@ public class ProviderResource {
     }
 
     @GetMapping
-    public Stream<Provider> findByNullSafe(@ModelAttribute ProviderFindCriteria criteria) {
+    public Stream<Provider> findNullSafe(@ModelAttribute ProviderFindCriteria criteria) {
         return this.providerService.findNullSafe(criteria)
                 .map(Provider::ofCompanyPhoneNote);
     }

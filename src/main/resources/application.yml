@@ -2,7 +2,7 @@ spring:
   application:
     name: tpv-article
   profiles:
-  # Profile ----------------------------------------
+    # Profile ----------------------------------------
     active: dev
   # ------------------------------------------------
   output:
@@ -37,10 +37,9 @@ logging:
 
 eureka:
   instance:
+    prefer-ip-address: true
     lease-renewal-interval-in-seconds: 30
     lease-expiration-duration-in-seconds: 90
-    instance-id: ${spring.application.name}:${server.port}
-    prefer-ip-address: true
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/

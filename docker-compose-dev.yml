@@ -19,4 +19,4 @@ networks:
 #> docker compose -f docker-compose-dev.yml up --build -d
 
 #> ports: -"0:8082" or remove
-#> docker compose -p tpv-articles up --scale tpv-article=2 -d
+#> docker-compose -f docker-compose-dev.yml -p tpv-articles up --scale tpv-article=2 -d
