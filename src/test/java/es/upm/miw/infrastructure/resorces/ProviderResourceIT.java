@@ -27,13 +27,13 @@ class ProviderResourceIT {
     @Test
     void testRead() throws Exception {
         mockMvc.perform(get(ProviderResource.PROVIDERS + ProviderResource.COMPANY_ID, "pro1")
-                        .with(jwt().jwt(jwt -> jwt.claim("scope", "admin")))
+                        .with(jwt().jwt(jwt -> jwt.claim("roles", "admin")))
                 )
                 .andExpect(status().isOk());
     }
 
     @Test
-    @WithMockUser(username = "666666003", authorities = {"SCOPE_customer"})
+    @WithMockUser(username = "666666003", roles = {"customer"})
     void testFindCompaniesNotAuthorized() throws Exception {
         mockMvc.perform(get(ProviderResource.PROVIDERS + ProviderResource.COMPANIES))
                 .andExpect(status().isUnauthorized());

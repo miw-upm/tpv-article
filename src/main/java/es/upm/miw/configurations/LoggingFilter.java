@@ -10,6 +10,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
 import java.io.IOException;
@@ -26,27 +27,43 @@ public class LoggingFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        log.info("-------------------------------------------------------------------------------------------------");
-        log.info("Request: {} {}", request.getMethod(), request.getRequestURI());
-        log.info("Headers:");
+        log.debug("-------------------------------------------------------------------------------------------------");
+        log.debug("Request: {} {}", request.getMethod(), request.getRequestURI());
+        log.debug("Headers:");
         Collections.list(request.getHeaderNames()).forEach(headerName -> {
             String headerValue = request.getHeader(headerName);
-            log.info("  {}: {}", headerName, headerValue);
+            log.debug("  {}: {}", headerName, headerValue);
         });
-        log.info("Parameters:");
+        log.debug("Parameters:");
         Enumeration<String> parameterNames = request.getParameterNames();
         while (parameterNames.hasMoreElements()) {
             String paramName = parameterNames.nextElement();
             String paramValue = request.getParameter(paramName);
-            log.info("  {}: {}", paramName, paramValue);
+            log.debug("  {}: {}", paramName, paramValue);
         }
+
+        ContentCachingRequestWrapper wrappedRequest = new ContentCachingRequestWrapper(request);
         ContentCachingResponseWrapper wrappedResponse = new ContentCachingResponseWrapper(response);
-        filterChain.doFilter(request, wrappedResponse);
-        log.info("-   -   -   -   -   -   -   -   -   -   -   -   -   -   -");
+
+        try {
+            filterChain.doFilter(wrappedRequest, wrappedResponse);
+        } catch (Exception e) {
+            log.error("Error during filter processing", e);
+            throw e;
+        }
+
+        // Ahora que se ha procesado la request, se puede obtener el cuerpo
+        byte[] requestArray = wrappedRequest.getContentAsByteArray();
+        if (requestArray.length > 0) {
+            String requestBody = new String(requestArray, wrappedRequest.getCharacterEncoding());
+            log.debug("Request body (JSON): {}", requestBody);
+        }
+
+        log.debug("-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -    -   -   -   -");
         byte[] responseArray = wrappedResponse.getContentAsByteArray();
         if (responseArray.length > 0) {
             String responseBody = new String(responseArray, response.getCharacterEncoding());
-            log.info("Response body: {}", responseBody);
+            log.debug("Response body: {}", responseBody);
         }
         wrappedResponse.copyBodyToResponse();
     }

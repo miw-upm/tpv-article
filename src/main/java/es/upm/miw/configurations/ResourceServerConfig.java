@@ -24,8 +24,10 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-public class ResourceServerConfig {  // validate tokens y security APIs con SCOPE_*.
-    private static final String SCOPE_PREFIX = "SCOPE_";
+public class ResourceServerConfig {
+    public static final String CLAIM_NAME = "roles";
+    public static final String AWS_CLAIM_NAME = "cognito:groups";
+    private static final String ROLE_PREFIX = "ROLE_";
 
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -42,21 +44,19 @@ public class ResourceServerConfig {  // validate tokens y security APIs con SCOP
     @Bean
     public JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
-        grantedAuthoritiesConverter.setAuthorityPrefix(SCOPE_PREFIX);
-        grantedAuthoritiesConverter.setAuthoritiesClaimName("scope");
+        grantedAuthoritiesConverter.setAuthorityPrefix(ROLE_PREFIX);
+        grantedAuthoritiesConverter.setAuthoritiesClaimName(CLAIM_NAME);
 
         JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwt -> {
-            if (jwt.getClaim("scope") != null) { // standard Auth2
+            if (jwt.getClaim(CLAIM_NAME) != null) {
                 return grantedAuthoritiesConverter.convert(jwt);
-            } else {
-                return Optional.ofNullable(jwt.getClaimAsStringList("cognito:groups"))// AWS cognito: group as scope
-                        .orElse(Collections.emptyList())
-                        .stream()
-                        .map(group -> new SimpleGrantedAuthority(SCOPE_PREFIX + group))
-                        .collect(Collectors.toList());
             }
-
+            return Optional.ofNullable(jwt.getClaimAsStringList(AWS_CLAIM_NAME))// AWS cognito: group as scope
+                    .orElse(Collections.emptyList())
+                    .stream()
+                    .map(group -> new SimpleGrantedAuthority(ROLE_PREFIX + group))
+                    .collect(Collectors.toList());
         });
         return jwtAuthenticationConverter;
     }
