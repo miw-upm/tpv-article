@@ -27,7 +27,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 public class ResourceServerConfig {
     public static final String CLAIM_NAME = "roles";
     public static final String AWS_CLAIM_NAME = "cognito:groups";
-    private static final String ROLE_PREFIX = "ROLE_";
+    private static final String PREFIX = "ROLE_";
 
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -44,7 +44,7 @@ public class ResourceServerConfig {
     @Bean
     public JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
-        grantedAuthoritiesConverter.setAuthorityPrefix(ROLE_PREFIX);
+        grantedAuthoritiesConverter.setAuthorityPrefix(PREFIX);
         grantedAuthoritiesConverter.setAuthoritiesClaimName(CLAIM_NAME);
 
         JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
@@ -55,7 +55,7 @@ public class ResourceServerConfig {
             return Optional.ofNullable(jwt.getClaimAsStringList(AWS_CLAIM_NAME))// AWS cognito: group as scope
                     .orElse(Collections.emptyList())
                     .stream()
-                    .map(group -> new SimpleGrantedAuthority(ROLE_PREFIX + group))
+                    .map(group -> new SimpleGrantedAuthority(PREFIX + group))
                     .collect(Collectors.toList());
         });
         return jwtAuthenticationConverter;
