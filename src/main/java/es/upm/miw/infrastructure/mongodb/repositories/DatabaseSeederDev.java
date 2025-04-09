@@ -21,13 +21,14 @@ public class DatabaseSeederDev {
     private final ProviderRepository providerRepository;
     private final ArticleRepository articleRepository;
     private final TagRepository tagRepository;
-
+    private final CashierRepository cashierRepository;
     private final DatabaseStarting databaseStarting;
 
-    public DatabaseSeederDev(ProviderRepository providerRepository, ArticleRepository articleRepository, TagRepository tagRepository, DatabaseStarting databaseStarting) {
+    public DatabaseSeederDev(ProviderRepository providerRepository, ArticleRepository articleRepository, TagRepository tagRepository, CashierRepository cashierRepository, DatabaseStarting databaseStarting) {
         this.providerRepository = providerRepository;
         this.articleRepository = articleRepository;
         this.tagRepository = tagRepository;
+        this.cashierRepository = cashierRepository;
         this.databaseStarting = databaseStarting;
         this.deleteAllAndInitializeAndSeedDataBase();
     }
@@ -41,6 +42,8 @@ public class DatabaseSeederDev {
         this.tagRepository.deleteAll();
         this.articleRepository.deleteAll();
         this.providerRepository.deleteAll();
+        this.cashierRepository.deleteAll();
+
         log.warn("------- Delete All -----------");
         this.databaseStarting.initialize();
     }

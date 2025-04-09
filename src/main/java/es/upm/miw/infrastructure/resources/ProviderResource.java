@@ -4,6 +4,7 @@ import es.upm.miw.domain.model.Provider;
 import es.upm.miw.domain.model.criteria.ProviderFindCriteria;
 import es.upm.miw.domain.services.ProviderService;
 import es.upm.miw.infrastructure.resources.dtos.ProviderCompanyDto;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -41,12 +42,14 @@ public class ProviderResource {
     }
 
 
+    @SecurityRequirement(name = "bearerAuth")
     @PutMapping(COMPANY_ID)
     public Provider update(@PathVariable String company, @Valid @RequestBody Provider provider) {
         provider.doDefault();
         return this.providerService.update(company, provider);
     }
 
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping(COMPANIES)
     public ProviderCompanyDto findCompanies(@RequestParam(required = false) String company) {
         return new ProviderCompanyDto(this.providerService.findCompanies(company)
@@ -54,6 +57,7 @@ public class ProviderResource {
                 .toList());
     }
 
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping
     public Stream<Provider> findNullSafe(@ModelAttribute ProviderFindCriteria criteria) {
         return this.providerService.findNullSafe(criteria)
