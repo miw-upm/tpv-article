@@ -55,4 +55,8 @@ public class ArticleService {
     public Stream<Article> findByBarcodeNullSafe(String barcode) {
         return this.articlePersistence.findByBarcodeAndNotDiscontinuedNullField(barcode);
     }
+
+    public Article readByBarcode(String barcode) {
+        return this.articlePersistence.readByBarcode(barcode);
+    }
 }

@@ -26,7 +26,7 @@ public class CashierResource {
         this.cashierService = cashierService;
     }
 
-    @PostMapping(produces = {"application/json"})
+    @PostMapping
     public void createOpened() {
         this.cashierService.createOpened();
     }

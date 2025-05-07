@@ -20,6 +20,8 @@ public class ArticleResource {
 
     public static final String ID_ID = "/{id}";
     public static final String BARCODES = "/barcodes";
+    public static final String BARCODE = "/barcode";
+    public static final String BARCODE_ID = "/{barcode}";
 
     private final ArticleService articleService;
 
@@ -28,7 +30,7 @@ public class ArticleResource {
         this.articleService = articleService;
     }
 
-    @PostMapping(produces = {"application/json"})
+    @PostMapping
     public Article create(@Valid @RequestBody Article article) {
         article.doDefault();
         return this.articleService.create(article);
@@ -39,6 +41,13 @@ public class ArticleResource {
     public Article read(@PathVariable UUID id) {
         return this.articleService.read(id);
     }
+
+    @PreAuthorize(Security.ALL)
+    @GetMapping(BARCODE + BARCODE_ID)
+    public Article readByBarcode(@PathVariable String barcode) {
+        return this.articleService.readByBarcode(barcode);
+    }
+
 
     @GetMapping
     public Stream<Article> findNullSafe(@ModelAttribute ArticleFindCriteria criteria) {

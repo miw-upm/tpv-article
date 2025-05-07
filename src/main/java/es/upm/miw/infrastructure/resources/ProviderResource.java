@@ -29,7 +29,7 @@ public class ProviderResource {
         this.providerService = providerService;
     }
 
-    @PostMapping(produces = {"application/json"})
+    @PostMapping
     public Provider create(@Valid @RequestBody Provider provider) {
         provider.doDefault();
         return this.providerService.create(provider);

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 public class CashierService {
@@ -24,6 +25,7 @@ public class CashierService {
     public void createOpened() {
         Cashier last = lastByOpenedAssure(false);
         Cashier newCashier = Cashier.builder()
+                .id(UUID.randomUUID())
                 .initialCash(last.getFinalCash())
                 .openingDate(LocalDateTime.now())
                 .cashSales(BigDecimal.ZERO)
